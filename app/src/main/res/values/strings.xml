@@ -3,4 +3,5 @@
     <string name="title_notes">Заметки</string>
     <string name="title_events">События</string>
     <string name="title_trash">Корзина</string>
+    <string name="notebook_description">NoteBook</string>
 </resources>
