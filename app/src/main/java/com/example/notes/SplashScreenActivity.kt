@@ -15,6 +15,7 @@ class SplashScreenActivity : AppCompatActivity() {
                 try {
                     val dBHandler=DBHandler(baseContext)
                     sleep(1000)
+
                     val splashIntent= Intent(baseContext,MainActivity::class.java)
                     startActivity(splashIntent)
                 }catch (e:Exception){
