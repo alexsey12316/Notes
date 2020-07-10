@@ -48,8 +48,8 @@ class DBHandler(context : Context) :SQLiteOpenHelper(context,
         val cv:ContentValues= ContentValues()
         cv.put(COL_NAME,note.name)
         cv.put(COL_DESCR,note.description)
-
         cv.put(COL_UPDATE_TIME,note.update.time)
+
         if(note.notifDate!=null)
             cv.put(COL_NOTIF_TIME,note.notifDate?.time)
 

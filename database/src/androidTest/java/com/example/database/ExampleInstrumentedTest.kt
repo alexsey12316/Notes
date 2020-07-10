@@ -38,6 +38,7 @@ class ExampleInstrumentedTest {
     }
 
 
+
     companion object
     {
         val TAG="DATABASE_DEBUG"
@@ -115,6 +116,18 @@ class ExampleInstrumentedTest {
         Log.d(TAG,last.toString())
         db.Delete(last)
         Log.d(TAG,last.toString())
+    }
+
+    @Test
+    fun date()
+    {
+        //       Date-> CalendarDay(year month day)
+        val date= Date()
+
+        val calendar=Calendar.getInstance()
+        calendar.time=date
+
+
     }
 
 }
