@@ -2,7 +2,7 @@ package com.example.notes
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.View
+import android.util.Log
 import android.widget.CalendarView
 import android.widget.TextView
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -11,8 +11,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import java.text.DateFormat
-import java.util.*
+import com.example.database.DBHandler
+import kotlinx.android.synthetic.main.fragment_event.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,7 +21,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val navView: BottomNavigationView = findViewById(R.id.nav_view) //getting bottom navigation from activity_main
-
         val navController = findNavController(R.id.nav_host_fragment) //getting fragment from activity_main
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.

@@ -3,6 +3,8 @@ package com.example.notes
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.database.DBHandler
+import java.util.*
 
 class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -11,7 +13,8 @@ class SplashScreenActivity : AppCompatActivity() {
         val background= object: Thread() {
             override fun run() {
                 try {
-                    sleep(3000)
+                    val dBHandler=DBHandler(baseContext)
+                    sleep(1000)
                     val splashIntent= Intent(baseContext,MainActivity::class.java)
                     startActivity(splashIntent)
                 }catch (e:Exception){
