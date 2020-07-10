@@ -7,9 +7,14 @@
 
     <fragment
         android:id="@+id/navigation_note"
-        android:name="com.example.notes.NotesFragment"
+        android:name="com.example.notes.notes.NotesFragment"
         android:label="@string/title_notes"
-        tools:layout="@layout/fragment_note" />
+        tools:layout="@layout/fragment_note" >
+        <action
+            android:id="@+id/action_navigation_note_to_addNoteFragment"
+            app:destination="@id/addNoteFragment"
+            app:popUpTo="@id/navigation_note" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_event"
@@ -22,4 +27,9 @@
         android:name="com.example.notes.TrashFragment"
         android:label="@string/title_trash"
         tools:layout="@layout/fragment_trash" />
+    <fragment
+        android:id="@+id/addNoteFragment"
+        android:name="com.example.notes.addnote.AddNoteFragment"
+        android:label="Добавить заметку"
+        tools:layout="@layout/add_note_fragment" />
 </navigation>
