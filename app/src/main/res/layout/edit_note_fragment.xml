@@ -1,29 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="note"
+            type="com.example.notes.edit_note.EditNoteViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".addnote.AddNoteFragment">
+        tools:context=".edit_note.EditNoteFragment">
 
         <EditText
-            android:id="@+id/editText_titleNote"
+            android:id="@+id/editText_titleNoteEdit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:background="@drawable/background_text_note"
-            android:hint="Название"
             android:inputType="textPersonName|textCapSentences"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView_pickDate"
+            android:id="@+id/textView_pickDateEdit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -36,16 +42,15 @@
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText_titleNote" />
+            app:layout_constraintTop_toBottomOf="@+id/editText_titleNoteEdit" />
 
         <EditText
-            android:id="@+id/editText_textNote"
+            android:id="@+id/editText_textNoteEdit"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
             android:background="@drawable/background_text_note"
             android:gravity="start|top"
             android:hint="Введите текст"
@@ -53,8 +58,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_pickDate" />
-
+            app:layout_constraintTop_toBottomOf="@+id/textView_pickDateEdit" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
+
+

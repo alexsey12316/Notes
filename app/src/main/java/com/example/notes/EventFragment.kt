@@ -13,7 +13,6 @@ import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_event.*
 import java.util.*
 
-
 class EventFragment:Fragment()
 {
 

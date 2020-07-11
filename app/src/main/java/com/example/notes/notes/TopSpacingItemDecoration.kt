@@ -14,6 +14,7 @@ class TopSpacingItemDecoration(private val verticalPadding: Int, private val hor
     ) {
         super.getItemOffsets(outRect, view, parent, state)
         outRect.top = verticalPadding
+        outRect.bottom = verticalPadding
         outRect.left = horizontalPadding
         outRect.right = horizontalPadding
     }

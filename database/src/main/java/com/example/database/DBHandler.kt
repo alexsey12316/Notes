@@ -160,7 +160,7 @@ class DBHandler(context : Context) :SQLiteOpenHelper(context,
     private fun updateIsDeleted(toChange: Note,isDeleted: Boolean):Int
     {
         val cv=ContentValues()
-        cv.put(COL_DESCR,isDeleted)
+        cv.put(COL_IS_DELETED,isDeleted)
         val res=update(toChange,cv)
         if(res!=-1)
         {
@@ -178,10 +178,10 @@ class DBHandler(context : Context) :SQLiteOpenHelper(context,
         cv.put(COL_NAME,new.name)
         cv.put(COL_DESCR,new.description)
 
-        if(toChange.notifDate==null)
+        if(new.notifDate==null)
             cv.putNull(COL_NOTIF_TIME)
         else
-            cv.put(COL_NOTIF_TIME,toChange.notifDate?.time)
+            cv.put(COL_NOTIF_TIME, new.notifDate?.time)
 
         cv.put(COL_IS_DELETED,new.isDeleted)
         val res=update(toChange,cv)

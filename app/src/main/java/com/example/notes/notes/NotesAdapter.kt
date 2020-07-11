@@ -4,10 +4,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.database.Note
 import com.example.notes.R
 import kotlinx.android.synthetic.main.note_item.view.*
 
-class NotesAdapter(private var noteDataSet: List<Note>) : RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
+class NotesAdapter(private var noteDataSet: List<Note>, private val listener : (id: Int?) -> Unit) : RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
 
     inner class NotesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val note_title = itemView.note_title
@@ -23,8 +24,9 @@ class NotesAdapter(private var noteDataSet: List<Note>) : RecyclerView.Adapter<N
     }
 
     override fun onBindViewHolder(holder: NotesViewHolder, position: Int) {
-        holder.note_title.text = noteDataSet[position].title
-        holder.note_text.text = noteDataSet[position].text
+        holder.note_title.text = noteDataSet[position].name
+        holder.note_text.text = noteDataSet[position].description
+        holder.itemView.setOnClickListener { listener(noteDataSet[position].ID)}
     }
 
 }
