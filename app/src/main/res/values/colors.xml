@@ -3,5 +3,9 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="daysColorDefault">#FFCA2A</color>
+    <color name="daysColorID0">#66F63D</color>
+    <color name="daysColorID1">#27E6CF</color>
+    <color name="daysColorID2">#E158FF</color>
     <color name="splashColor">#009034</color>
 </resources>
