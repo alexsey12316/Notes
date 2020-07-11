@@ -54,6 +54,7 @@ class CurrentDayDecorator(context: Activity?, currentDay: CalendarDay) : DayView
 
     override fun decorate(view: DayViewFacade) {
         view.setSelectionDrawable(drawable!!)
+        view.se
     }
 
     init {

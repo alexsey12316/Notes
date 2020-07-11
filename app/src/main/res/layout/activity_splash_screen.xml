@@ -9,7 +9,8 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/notice"
+        android:src="@drawable/splash_pic"
         android:scaleType="centerInside"
-        android:contentDescription="@string/notebook_description"/>
+        android:contentDescription="@string/notebook_description"
+        android:background="@android:color/white"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
