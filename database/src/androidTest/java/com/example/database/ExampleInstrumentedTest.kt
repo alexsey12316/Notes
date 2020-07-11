@@ -126,9 +126,32 @@ class ExampleInstrumentedTest {
 
         val calendar=Calendar.getInstance()
         calendar.time=date
-
-
     }
-
+    @Test
+    fun Events()
+    {
+        Log.d(TAG,"----------------------------------------------------------------------------------------------------------------------------------------------------------------------")
+        val db=DBHandler(appContext)
+        val arr=db.getEvents()
+        for (i in arr)
+            Log.d(TAG,i.toString())
+    }
+    @Test
+    fun getSpecificEvents()
+    {
+        Log.d(TAG,"----------------------------------------------------------------------------------------------------------------------------------------------------------------------")
+        val db=DBHandler(appContext)
+        val arr=db.getEventsByDate(Date())
+        for (i in arr)
+            Log.d(TAG,i.toString())
+    }
+    @Test
+    fun AddEvents()
+    {
+        Log.d(TAG,"----------------------------------------------------------------------------------------------------------------------------------------------------------------------")
+        val db=DBHandler(appContext)
+        db.add(Note("Event","Event description",Date()))
+    }
 }
+
 
