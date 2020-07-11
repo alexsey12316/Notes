@@ -105,7 +105,7 @@ class DBHandler(context : Context) :SQLiteOpenHelper(context,
     fun getAll():List<Note> = get("SELECT * from $TABLE_NAME")
     fun getDeleted():List<Note> = get("SELECT * from $TABLE_NAME WHERE $COL_IS_DELETED == 1")
     fun getRunning():List<Note> = get("SELECT * from $TABLE_NAME WHERE $COL_IS_DELETED == 0")
-    fun getEvents():List<Note> = get("SELECT * from $TABLE_NAME WHERE $COL_NOTIF_TIME not null")
+    fun getEvents():List<Note> = get("SELECT * from $TABLE_NAME WHERE $COL_NOTIF_TIME not null AND $COL_IS_DELETED == 0")
     fun getEventsByDate(date:Date):List<Note>
     {
         calendar.time=date
@@ -118,7 +118,20 @@ class DBHandler(context : Context) :SQLiteOpenHelper(context,
         calendar.add(Calendar.DAY_OF_MONTH,1)
         val right:Long= calendar.time.time
 
-        return get("SELECT * from $TABLE_NAME WHERE $COL_NOTIF_TIME BETWEEN $left AND $right")
+        return get("SELECT * from $TABLE_NAME WHERE $COL_NOTIF_TIME BETWEEN $left AND $right AND $COL_IS_DELETED == 0")
+    }
+
+    fun EraseTimeOut(days:Int ):Boolean
+    {
+        calendar.time=Date()
+        calendar.add(Calendar.DAY_OF_MONTH,-days)
+
+        val date= calendar.time
+
+        val db=this.writableDatabase
+        val res=db.delete(TABLE_NAME,"$COL_IS_DELETED=1 AND $COL_UPDATE_TIME < ${date.time}", null)
+        db.close()
+        return res!=-1
     }
 
 

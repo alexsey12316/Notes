@@ -6,7 +6,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+        android:id="@+id/eventsCalendar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

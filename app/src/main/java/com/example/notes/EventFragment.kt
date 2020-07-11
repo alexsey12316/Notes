@@ -16,6 +16,7 @@ import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
+
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -29,10 +30,9 @@ class EventFragment:Fragment()
     ): View? {
         val note=Note("iouuu","Lol",java.util.Date())
         val dbHandler=DBHandler(requireContext())
-        dbHandler.add(note)
         val tempView=inflater.inflate(R.layout.fragment_event, container, false)
         val widget:MaterialCalendarView=tempView.findViewById(R.id.eventsCalendar)
-        val listEvents=dbHandler.getAll()
+        val listEvents=dbHandler.getEvents()
         val calendar=Calendar.getInstance()
        for (elem in listEvents){
             calendar.time=elem.notifDate!!

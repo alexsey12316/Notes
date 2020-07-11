@@ -1,4 +1,4 @@
-package com.example.notes.notes
+package com.example.notes.trash
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,23 +6,26 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.database.DBHandler
-import com.example.notes.MainActivity
 import com.example.notes.R
+import com.example.notes.notes.NotesAdapter
+import com.example.notes.notes.NotesFragmentDirections
+import com.example.notes.notes.TopSpacingItemDecoration
 
-class NotesFragment:Fragment()
+class TrashFragment : Fragment()
 {
+    lateinit var viewModel: TrashViewModel
+    lateinit var viewModelFactory: TrashViewModelFactory
+    lateinit var viewAdapter: TrashAdapter
+
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewManager: RecyclerView.LayoutManager
-    private lateinit var viewAdapter: NotesAdapter
-
-    private lateinit var viewModel: NotesViewModel
-    private lateinit var viewModelFactory: NotesViewModelFactory
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,34 +33,30 @@ class NotesFragment:Fragment()
         savedInstanceState: Bundle?
     ): View? {
 
-        viewModelFactory = NotesViewModelFactory(DBHandler(requireContext()))
+        viewModelFactory = TrashViewModelFactory(DBHandler(requireContext()))
 
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(NotesViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(TrashViewModel::class.java)
 
-        return inflater.inflate(R.layout.fragment_note, container, false)
+        return inflater.inflate(R.layout.fragment_trash, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val addNoteFloatingActionButtton: View = view.findViewById(R.id.add_note_floating_button)
-
-        addNoteFloatingActionButtton.setOnClickListener { view ->
-            view.findNavController().navigate(NotesFragmentDirections.actionNavigationNoteToAddNoteFragment())
+        viewAdapter = TrashAdapter(viewModel.deletedNoted) { id: Int? ->
+            Toast.makeText(requireContext(), "Нажали на $id", Toast.LENGTH_SHORT).show()
         }
 
-
-
-        viewAdapter = NotesAdapter(viewModel.listNotes) { id: Int? ->
-            view.findNavController().navigate(NotesFragmentDirections.actionNavigationNoteToEditNote(id!!))
-        }
         viewManager = LinearLayoutManager(requireContext())
 
-        recyclerView = view.findViewById<RecyclerView>(R.id.note_list).apply {
+        recyclerView = view.findViewById<RecyclerView>(R.id.deleted_note_list).apply {
             adapter = viewAdapter
             val topSpacingItemDecoration = TopSpacingItemDecoration(15, 10)
             addItemDecoration(topSpacingItemDecoration)
             layoutManager = viewManager
         }
+
     }
+
+
 }

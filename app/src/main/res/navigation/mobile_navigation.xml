@@ -29,7 +29,7 @@
 
     <fragment
         android:id="@+id/navigation_trash"
-        android:name="com.example.notes.TrashFragment"
+        android:name="com.example.notes.trash.TrashFragment"
         android:label="@string/title_trash"
         tools:layout="@layout/fragment_trash" />
     <fragment
