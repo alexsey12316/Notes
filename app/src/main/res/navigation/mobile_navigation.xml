@@ -7,19 +7,51 @@
 
     <fragment
         android:id="@+id/navigation_note"
-        android:name="com.example.notes.NotesFragment"
+        android:name="com.example.notes.notes.NotesFragment"
         android:label="@string/title_notes"
-        tools:layout="@layout/fragment_note" />
+        tools:layout="@layout/fragment_note" >
+        <action
+            android:id="@+id/action_navigation_note_to_addNoteFragment"
+            app:destination="@id/addNoteFragment"
+            app:popUpTo="@id/navigation_note" />
+        <action
+            android:id="@+id/action_navigation_note_to_editNote"
+            app:destination="@id/editNote" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_event"
         android:name="com.example.notes.EventFragment"
         android:label="@string/title_events"
-        tools:layout="@layout/fragment_event" />
+        tools:layout="@layout/fragment_event" >
+
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_trash"
-        android:name="com.example.notes.TrashFragment"
+        android:name="com.example.notes.trash.TrashFragment"
         android:label="@string/title_trash"
         tools:layout="@layout/fragment_trash" />
+    <fragment
+        android:id="@+id/addNoteFragment"
+        android:name="com.example.notes.addnote.AddNoteFragment"
+        android:label="Добавить заметку"
+        tools:layout="@layout/add_note_fragment" >
+        <action
+            android:id="@+id/action_addNoteFragment_to_navigation_note"
+            app:destination="@id/navigation_note" />
+    </fragment>
+    <fragment
+        android:id="@+id/editNote"
+        android:name="com.example.notes.edit_note.EditNoteFragment"
+        android:label="Изменить заметку"
+        tools:layout="@layout/edit_note_fragment">
+
+        <argument
+            android:name="recordID"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_editNote_to_navigation_note"
+            app:destination="@id/navigation_note" />
+    </fragment>
 </navigation>
