@@ -4,5 +4,20 @@
     <string name="title_events">События</string>
     <string name="title_trash">Корзина</string>
     <string name="notebook_description">NoteBook</string>
-    <string name="note_text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci error eveniet exercitationem, fugit iste maiores molestiae quibusdam? Beatae commodi maiores nisi odit quia tenetur? Eaque magnam minus rerum unde veritatis!</string>
+    <array name="text_appearances">
+        <item>Январь</item>
+        <item>Февраль</item>
+        <item>Март</item>
+        <item>Апрель</item>
+        <item>Май</item>
+        <item>Июнь</item>
+        <item>Июль</item>
+        <item>Август</item>
+        <item>Сентябрь</item>
+        <item>Октябрь</item>
+        <item>Ноябрь</item>
+        <item>Декабрь</item>
+    </array>
+    <string name="calendarLoad">Расставляем даты</string>
+    <string name="noticeLoad">Загрузка ваших заметок</string>
 </resources>
