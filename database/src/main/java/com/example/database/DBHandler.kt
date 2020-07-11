@@ -13,7 +13,7 @@ class DBHandler(context : Context) :SQLiteOpenHelper(context,
     DATABASE_NAME,null,1)
 {
 
-    companion object
+   private companion object
     {
         val DATABASE_NAME="NOTES.db"
         val TABLE_NAME="NOTES_TABLE"
@@ -23,6 +23,8 @@ class DBHandler(context : Context) :SQLiteOpenHelper(context,
         val COL_NOTIF_TIME="NOTIFICATION_TIME"
         val COL_IS_DELETED="IS_DELETED"
         val COL_ID="ID"
+        val calendar=Calendar.getInstance()
+
     }
 
     override fun onCreate(db: SQLiteDatabase?)
@@ -48,8 +50,8 @@ class DBHandler(context : Context) :SQLiteOpenHelper(context,
         val cv:ContentValues= ContentValues()
         cv.put(COL_NAME,note.name)
         cv.put(COL_DESCR,note.description)
-
         cv.put(COL_UPDATE_TIME,note.update.time)
+
         if(note.notifDate!=null)
             cv.put(COL_NOTIF_TIME,note.notifDate?.time)
 
@@ -103,6 +105,21 @@ class DBHandler(context : Context) :SQLiteOpenHelper(context,
     fun getAll():List<Note> = get("SELECT * from $TABLE_NAME")
     fun getDeleted():List<Note> = get("SELECT * from $TABLE_NAME WHERE $COL_IS_DELETED == 1")
     fun getRunning():List<Note> = get("SELECT * from $TABLE_NAME WHERE $COL_IS_DELETED == 0")
+    fun getEvents():List<Note> = get("SELECT * from $TABLE_NAME WHERE $COL_NOTIF_TIME not null")
+    fun getEventsByDate(date:Date):List<Note>
+    {
+        calendar.time=date
+        val day= calendar.get(Calendar.DAY_OF_MONTH)
+        val month= calendar.get(Calendar.MONTH)
+        val year= calendar.get(Calendar.YEAR)
+
+        calendar.set(year,month,day,0,0,0)
+        val left:Long= calendar.time.time
+        calendar.add(Calendar.DAY_OF_MONTH,1)
+        val right:Long= calendar.time.time
+
+        return get("SELECT * from $TABLE_NAME WHERE $COL_NOTIF_TIME BETWEEN $left AND $right")
+    }
 
 
     private fun update(toChange: Note,param:ContentValues):Int
