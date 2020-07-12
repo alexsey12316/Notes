@@ -2,11 +2,13 @@ package com.example.notes.addnote
 
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
@@ -29,6 +31,8 @@ class AddNoteFragment : Fragment() {
     private lateinit var viewModel: AddNoteViewModel
     private lateinit var viewModelFactory: AddNoteViewModelFactory
     private lateinit var binding: AddNoteFragmentBinding
+
+    private lateinit var imm: InputMethodManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,7 +70,11 @@ class AddNoteFragment : Fragment() {
             when(viewModel.addNoteRecordToDB()) {
                 viewModel.EMPTY_EDIT_TEXT -> Toast.makeText(requireContext(), "Заполните все текстовые поля", Toast.LENGTH_SHORT).show()
                 viewModel.DB_ERROR -> Toast.makeText(requireContext(), "Ошибка базы данных", Toast.LENGTH_SHORT).show()
-                viewModel.SUCCESS -> findNavController().navigate(R.id.action_addNoteFragment_to_navigation_note)
+                viewModel.SUCCESS -> {
+                    imm.hideSoftInputFromWindow(view?.windowToken, 0)
+                    findNavController().navigate(R.id.action_addNoteFragment_to_navigation_note)
+
+                }
             }
         }
 
@@ -100,6 +108,10 @@ class AddNoteFragment : Fragment() {
         datePickerDialog.show();
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        imm = (activity?.getSystemService(Context.INPUT_METHOD_SERVICE)) as InputMethodManager
+    }
 
 
 }
