@@ -1,12 +1,14 @@
 package com.example.notes.edit_note
 
 import android.app.DatePickerDialog
+import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import android.widget.TextView
 import android.widget.Toast
@@ -27,6 +29,8 @@ class EditNoteFragment : Fragment() {
     private lateinit var binding: EditNoteFragmentBinding
     private lateinit var viewModel: EditNoteViewModel
     private lateinit var viewModelFactory: EditNoteViewModelFactory
+
+    private lateinit var imm: InputMethodManager
 
 
     companion object {
@@ -64,32 +68,46 @@ class EditNoteFragment : Fragment() {
         viewModel.titleNote = binding.editTextTitleNoteEdit.text.toString()
         viewModel.textNote = binding.editTextTextNoteEdit.text.toString()
         viewModel.dateOfEvent = binding.textViewPickDateEdit.text.toString()
+        when(item?.itemId) {
 
-        if(item?.itemId == R.id.action_editNote) {
+            R.id.action_editNote -> {
+                when(viewModel.updateNoteRecord()) {
+                    viewModel.EMPTY_EDIT_TEXT -> Toast.makeText(requireContext(), "Заполните все текстовые поля", Toast.LENGTH_SHORT).show()
+                    viewModel.DB_ERROR -> Toast.makeText(requireContext(), "Ошибка базы данных", Toast.LENGTH_SHORT).show()
+                    viewModel.SUCCESS -> {
+                        imm.hideSoftInputFromWindow(view?.windowToken, 0)
+                        findNavController().navigate(EditNoteFragmentDirections.actionEditNoteToNavigationNote())
 
-            when(viewModel.updateNoteRecord()) {
-                viewModel.EMPTY_EDIT_TEXT -> Toast.makeText(requireContext(), "Заполните все текстовые поля", Toast.LENGTH_SHORT).show()
-                viewModel.DB_ERROR -> Toast.makeText(requireContext(), "Ошибка базы данных", Toast.LENGTH_SHORT).show()
-                viewModel.SUCCESS -> findNavController().navigate(EditNoteFragmentDirections.actionEditNoteToNavigationNote())
+                    }
 
-            }
-        } else if(item?.itemId == R.id.action_deleteNote) {
-            when(viewModel.markAsDeleted()) {
-                viewModel.EMPTY_EDIT_TEXT -> Toast.makeText(requireContext(), "Заполните все текстовые поля", Toast.LENGTH_SHORT).show()
-                viewModel.DB_ERROR -> Toast.makeText(requireContext(), "Ошибка базы данных", Toast.LENGTH_SHORT).show()
-                viewModel.SUCCESS -> findNavController().navigate(EditNoteFragmentDirections.actionEditNoteToNavigationNote())
-            }
-        }else if(item?.itemId==R.id.action_shareNote && !viewModel.CheckIsEmpty())
-        {
-            val sendIntent: Intent = Intent().apply {
-                action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, "${viewModel.titleNote} \n${viewModel.textNote}")
-                type = "text/plain"
+                }
             }
 
-            val shareIntent = Intent.createChooser(sendIntent, null)
-            startActivity(shareIntent)
+            R.id.action_deleteNote -> {
+                when(viewModel.markAsDeleted()) {
+                    viewModel.EMPTY_EDIT_TEXT -> Toast.makeText(requireContext(), "Заполните все текстовые поля", Toast.LENGTH_SHORT).show()
+                    viewModel.DB_ERROR -> Toast.makeText(requireContext(), "Ошибка базы данных", Toast.LENGTH_SHORT).show()
+                    viewModel.SUCCESS -> {
+                        imm.hideSoftInputFromWindow(view?.windowToken, 0)
+                        findNavController().navigate(EditNoteFragmentDirections.actionEditNoteToNavigationNote())
 
+                    }
+                }
+            }
+
+            R.id.action_shareNote -> {
+                if(!(viewModel.CheckIsEmpty())) {
+                    val sendIntent: Intent = Intent().apply {
+                        action = Intent.ACTION_SEND
+                        putExtra(Intent.EXTRA_TEXT, "${viewModel.titleNote} \n${viewModel.textNote}")
+                        type = "text/plain"
+                    }
+                    val shareIntent = Intent.createChooser(sendIntent, null)
+                    startActivity(shareIntent)
+                } else {
+                    Toast.makeText(requireContext(), "Заполните все текстовые поля", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
 
         return false
@@ -103,6 +121,11 @@ class EditNoteFragment : Fragment() {
         binding.textViewPickDateEdit.setOnClickListener {
             showDatePickerDialog()
         }
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        imm = (activity?.getSystemService(Context.INPUT_METHOD_SERVICE)) as InputMethodManager
     }
 
     private fun showDatePickerDialog() {

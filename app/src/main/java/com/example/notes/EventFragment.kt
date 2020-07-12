@@ -58,10 +58,10 @@ class CurrentDayDecorator(context: Activity?, currentDay: CalendarDay) : DayView
 
     override fun decorate(view: DayViewFacade) {
         view.setSelectionDrawable(drawable!!)
-        view.se
     }
+
     init {
-          drawable=ContextCompat.getDrawable(context!!,R.drawable.ic_outline_radio_button_unchecked_24)
+            drawable=ContextCompat.getDrawable(context!!,R.drawable.ic_crop_square_black_24dp)
             DrawableCompat.setTint(drawable!!,Color.GREEN)
         }
 }

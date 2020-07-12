@@ -49,7 +49,7 @@
             android:background="@drawable/background_text_note"
             android:gravity="start|top"
             android:hint="Введите текст"
-            android:inputType="textMultiLine"
+            android:inputType="textMultiLine|textCapSentences"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
