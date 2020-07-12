@@ -115,7 +115,7 @@ class DBHandler(context : Context) :SQLiteOpenHelper(context,
 
         calendar.set(year,month,day,0,0,0)
         val left:Long= calendar.time.time
-        calendar.add(Calendar.DAY_OF_MONTH,1)
+        calendar.set(year,month,day,23,59,59)
         val right:Long= calendar.time.time
 
         return get("SELECT * from $TABLE_NAME WHERE $COL_NOTIF_TIME BETWEEN $left AND $right AND $COL_IS_DELETED == 0")

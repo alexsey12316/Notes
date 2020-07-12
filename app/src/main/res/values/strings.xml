@@ -18,6 +18,5 @@
         <item>Ноябрь</item>
         <item>Декабрь</item>
     </array>
-    <string name="calendarLoad">Расставляем даты</string>
     <string name="noticeLoad">Загрузка ваших заметок</string>
 </resources>
