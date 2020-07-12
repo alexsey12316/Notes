@@ -40,7 +40,7 @@ class EventFragment:Fragment()
         viewAdapter=NoteCalendarAdapter(listOf())
         recyclerView.apply {
             adapter = viewAdapter
-            val eventsItemDecorator = EventsItemDecorator(0, 10)
+            val eventsItemDecorator = EventsItemDecorator(5,15)
             addItemDecoration(eventsItemDecorator)
             layoutManager = viewManager
         }
