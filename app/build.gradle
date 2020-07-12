@@ -17,6 +17,9 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    defaultConfig{
+        vectorDrawables.useSupportLibrary = true
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -50,5 +53,4 @@ dependencies {
     implementation project(path: ':database')
 
     implementation "androidx.recyclerview:recyclerview:1.1.0"
-    implementation "androidx.cardview:cardview:1.0.0"
 }

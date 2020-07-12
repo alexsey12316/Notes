@@ -2,18 +2,12 @@ package com.example.notes
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
-import android.widget.CalendarView
-import android.widget.TextView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.database.DBHandler
-import kotlinx.android.synthetic.main.fragment_event.*
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
 

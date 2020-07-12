@@ -1,6 +1,7 @@
 package com.example.notes.edit_note
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.text.TextUtils
@@ -9,6 +10,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
@@ -77,6 +79,17 @@ class EditNoteFragment : Fragment() {
                 viewModel.DB_ERROR -> Toast.makeText(requireContext(), "Ошибка базы данных", Toast.LENGTH_SHORT).show()
                 viewModel.SUCCESS -> findNavController().navigate(EditNoteFragmentDirections.actionEditNoteToNavigationNote())
             }
+        }else if(item?.itemId==R.id.action_shareNote && !viewModel.CheckIsEmpty())
+        {
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, "${viewModel.titleNote} \n${viewModel.textNote}")
+                type = "text/plain"
+            }
+
+            val shareIntent = Intent.createChooser(sendIntent, null)
+            startActivity(shareIntent)
+
         }
 
         return false
