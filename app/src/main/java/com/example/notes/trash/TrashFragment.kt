@@ -44,7 +44,7 @@ class TrashFragment : Fragment()
         super.onViewCreated(view, savedInstanceState)
 
         viewAdapter = TrashAdapter(viewModel.deletedNoted.toMutableList()) { id: Int? ->
-            Toast.makeText(requireContext(), "Нажали на $id", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Произведите свайп, чтобы восстановить заметку", Toast.LENGTH_SHORT).show()
         }
 
         viewManager = LinearLayoutManager(requireContext())
@@ -68,6 +68,7 @@ class TrashFragment : Fragment()
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val removedNote = viewAdapter.removeItem(viewHolder)
                 viewModel.restoreNote(removedNote)
+                Toast.makeText(requireContext(), "Восстановлено", Toast.LENGTH_SHORT).show()
             }
 
         }
