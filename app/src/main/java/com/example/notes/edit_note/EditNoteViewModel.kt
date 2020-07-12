@@ -1,6 +1,12 @@
 package com.example.notes.edit_note
 
+import android.app.Activity
+import android.content.Intent
 import android.text.TextUtils
+import androidx.core.app.ShareCompat
+import androidx.core.content.ContextCompat.startActivity
+
+
 import androidx.lifecycle.ViewModel
 import com.example.database.DBHandler
 import com.example.database.Note
@@ -20,7 +26,7 @@ class EditNoteViewModel(val DB: DBHandler, val recordID: Int?) : ViewModel() {
 
     fun updateNoteRecord() : Int {
 
-        if(TextUtils.isEmpty(titleNote) || TextUtils.isEmpty(textNote)) {
+        if(CheckIsEmpty()) {
             return EMPTY_EDIT_TEXT
         }
 
@@ -43,5 +49,7 @@ class EditNoteViewModel(val DB: DBHandler, val recordID: Int?) : ViewModel() {
 
         return SUCCESS
     }
+
+    fun CheckIsEmpty()= (TextUtils.isEmpty(titleNote) || TextUtils.isEmpty(textNote))
 
 }

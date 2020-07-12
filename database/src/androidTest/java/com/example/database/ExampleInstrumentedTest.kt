@@ -1,5 +1,6 @@
 package com.example.database
 
+import android.nfc.Tag
 import android.util.Log
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -110,12 +111,17 @@ class ExampleInstrumentedTest {
     @Test
     fun Delete()
     {
+        Log.d(TAG,"----------------------------------------------------------------------------------------------------------------------------------------------------------------------")
         val db=DBHandler(appContext)
-        val arr=db.getAll()
-        val last=arr.last()
+        var arr=db.getAll()
+        var last=arr.last()
         Log.d(TAG,last.toString())
         db.Delete(last)
         Log.d(TAG,last.toString())
+        arr=db.getAll()
+        last=arr.last()
+        Log.d(TAG,last.toString())
+
     }
 
     @Test
@@ -150,7 +156,43 @@ class ExampleInstrumentedTest {
     {
         Log.d(TAG,"----------------------------------------------------------------------------------------------------------------------------------------------------------------------")
         val db=DBHandler(appContext)
-        db.add(Note("Event","Event description",Date()))
+        db.add(Note("Event","Event description", Date()))
+    }
+
+    @Test
+    fun ChangeLast()
+    {
+
+        Log.d(TAG,"--------------------------------------------------------------------------------------------------------------------")
+        val db=DBHandler(appContext)
+        val arr=db.getAll()
+        val last=arr.last()
+//        val note=Note("name","desc",Date(100000))
+        val note=Note("name","desc")
+        Log.d(TAG,last.toString())
+        db.update(last,note)
+        Log.d(TAG,last.toString())
+    }
+    @Test
+    fun ChangeLastDate()
+    {
+        Log.d(TAG,"--------------------------------------------------------------------------------------------------------------------")
+        val db=DBHandler(appContext)
+        val arr=db.getAll()
+        val last=arr.last()
+        Log.d(TAG,last.toString())
+        db.updateNotification(last,Date())
+        Log.d(TAG,last.toString())
+    }
+
+    @Test
+    fun EraseTimeOut()
+    {
+        getAll()
+        val db=DBHandler(appContext)
+        Log.d(TAG,"--------------------------------------------------------------------------------------------------------------------")
+db.EraseTimeOut(1)
+        getAll()
     }
 }
 
