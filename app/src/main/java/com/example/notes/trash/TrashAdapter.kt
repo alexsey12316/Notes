@@ -9,7 +9,7 @@ import com.example.database.Note
 import com.example.notes.R
 import kotlinx.android.synthetic.main.note_item.view.*
 
-class TrashAdapter(private var noteDataSet: List<Note>, private val listener : (id: Int?) -> Unit) : RecyclerView.Adapter<TrashAdapter.TrashViewHolder>() {
+class TrashAdapter(private var noteDataSet: MutableList<Note>, private val listener : (id: Int?) -> Unit) : RecyclerView.Adapter<TrashAdapter.TrashViewHolder>() {
 
     inner class TrashViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val note_title = itemView.note_title
@@ -30,6 +30,12 @@ class TrashAdapter(private var noteDataSet: List<Note>, private val listener : (
         holder.itemView.setOnClickListener { listener(noteDataSet[position].ID)}
     }
 
+    fun removeItem(viewHolder: RecyclerView.ViewHolder): Note {
+        val note: Note = noteDataSet[viewHolder.adapterPosition]
+        noteDataSet.removeAt(viewHolder.adapterPosition)
+        notifyItemRemoved(viewHolder.adapterPosition)
+        return note
+    }
 
 
 }

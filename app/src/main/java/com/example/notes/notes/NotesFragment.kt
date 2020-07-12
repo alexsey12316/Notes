@@ -9,9 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.database.DBHandler
+import com.example.database.Note
 import com.example.notes.MainActivity
 import com.example.notes.R
 
@@ -40,17 +42,16 @@ class NotesFragment:Fragment()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val addNoteFloatingActionButtton: View = view.findViewById(R.id.add_note_floating_button)
+        val addNoteFloatingActionButton: View = view.findViewById(R.id.add_note_floating_button)
 
-        addNoteFloatingActionButtton.setOnClickListener { view ->
+        addNoteFloatingActionButton.setOnClickListener { view ->
             view.findNavController().navigate(NotesFragmentDirections.actionNavigationNoteToAddNoteFragment())
         }
 
-
-
-        viewAdapter = NotesAdapter(viewModel.listNotes) { id: Int? ->
+        viewAdapter = NotesAdapter(viewModel.listNotes.toMutableList()) { id: Int? ->
             view.findNavController().navigate(NotesFragmentDirections.actionNavigationNoteToEditNote(id!!))
         }
+
         viewManager = LinearLayoutManager(requireContext())
 
         recyclerView = view.findViewById<RecyclerView>(R.id.note_list).apply {
@@ -59,5 +60,25 @@ class NotesFragment:Fragment()
             addItemDecoration(topSpacingItemDecoration)
             layoutManager = viewManager
         }
+
+        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val removedNote = (viewAdapter as NotesAdapter).removeItem(viewHolder)
+                viewModel.markAsDeleted(removedNote)
+            }
+
+        }
+
+        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
+
     }
 }

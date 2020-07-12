@@ -43,7 +43,7 @@ class TrashFragment : Fragment()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewAdapter = TrashAdapter(viewModel.deletedNoted) { id: Int? ->
+        viewAdapter = TrashAdapter(viewModel.deletedNoted.toMutableList()) { id: Int? ->
             Toast.makeText(requireContext(), "Нажали на $id", Toast.LENGTH_SHORT).show()
         }
 
@@ -55,6 +55,25 @@ class TrashFragment : Fragment()
             addItemDecoration(topSpacingItemDecoration)
             layoutManager = viewManager
         }
+
+        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val removedNote = viewAdapter.removeItem(viewHolder)
+                viewModel.restoreNote(removedNote)
+            }
+
+        }
+
+        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
 
     }
 
