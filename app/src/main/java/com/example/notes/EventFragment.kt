@@ -33,7 +33,6 @@ class EventFragment:Fragment()
         savedInstanceState: Bundle?
     ): View? {
         val dbHandler=DBHandler(requireContext())
-
         val tempView=inflater.inflate(R.layout.fragment_event, container, false)
         recyclerView=tempView.findViewById(R.id.eventList)
         viewManager = LinearLayoutManager(requireContext())
@@ -41,8 +40,8 @@ class EventFragment:Fragment()
         viewAdapter=NoteCalendarAdapter(listOf())
         recyclerView.apply {
             adapter = viewAdapter
-            val topSpacingItemDecoration = TopSpacingItemDecoration(15, 10)
-            addItemDecoration(topSpacingItemDecoration)
+            val eventsItemDecorator = EventsItemDecorator(0, 10)
+            addItemDecoration(eventsItemDecorator)
             layoutManager = viewManager
         }
         val widget:MaterialCalendarView=tempView.findViewById(R.id.eventsCalendar)
